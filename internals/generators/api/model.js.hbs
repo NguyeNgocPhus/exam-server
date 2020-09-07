@@ -1,0 +1,47 @@
+const mongoose = require('mongoose');
+const httpStatus = require('http-status');
+const ErrorHandler = require('../../helpers/ErrorHandler');
+
+/**
+ * {{properCase
+  name
+}} Schema
+ */
+const {{name
+}}Schema = new mongoose.Schema(
+  {
+    title: { type: String },
+    content: { type: String },
+  },
+  { collection: 'users', timestamps: true },
+);
+
+{{name}}Schema.statics = {
+  async get(id) {
+    const {{name}} = await this.findById(id);
+    if ({{name}}) return {{name
+}};
+    return new ErrorHandler('No such {{name
+}} exists!', httpStatus.NOT_FOUND);
+  },
+
+  async list({ skip = 0, limit = 500, sort = { createdAt: -1 }, filter = {} }) {
+    /* eslint-disable no-param-reassign */
+    const data = await this.find(filter, { createdAt: 0, updatedAt: 0, password: 0 })
+      .sort(sort)
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+    const count = await this.find(filter).count();
+    return {
+      data,
+      count,
+      limit,
+      skip,
+    };
+  },
+};
+
+module.exports = mongoose.model('{{properCase
+  name
+}}', {{name}}Schema);

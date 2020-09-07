@@ -1,0 +1,62 @@
+const httpStatus = require('http-status');
+const {{properCase name}} = require('./{{name
+}}.model');
+
+function load(req, res, next, id) {
+{{properCase name}}.get(id)
+    .then(({{name}}) => {
+      req.{{name}} = {{name
+}};
+      return next();
+    })
+    .catch((e) => next(e));
+}
+
+function get(req, res) {
+  return res.status(httpStatus.OK).json(req.{{name
+}});
+}
+
+function create(req, res, next) {
+  const { title, content } = req.body;
+  const {{name}} = new {{properCase name
+}}({
+    title,
+    content,
+  });
+{{name}}
+.save()
+    .then((result) => res.status(httpStatus.OK).json(result))
+    .catch((e) => next(e));
+}
+
+function update(req, res, next) {
+  const { title, content } = req.body;
+  const { {{name
+}} } = req;
+{{name}}.title = title;
+{{name}}.content = content;
+{{name}}
+.save()
+    .then((result) => res.status(httpStatus.OK).json(result))
+    .catch((e) => next(e));
+}
+
+function list(req, res, next) {
+  const { limit = 50, skip = 0, filter, sort } = req.query;
+{{properCase name
+}}.list({ limit, skip, filter, sort })
+    .then((result) => res.status(httpStatus.OK).json(result))
+    .catch((e) => next(e));
+}
+
+function remove(req, res, next) {
+  const { {{name
+}} } = req;
+{{name}}
+.remove()
+    .then((result) => res.status(httpStatus.OK).json(result))
+    .catch((e) => next(e));
+}
+
+module.exports = { load, get, create, update, list, remove };

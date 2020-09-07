@@ -1,0 +1,21 @@
+const Joi = require('joi');
+
+module.exports = {
+  create: {
+    body: {
+      title: Joi.string().required(),
+      content: Joi.string().required(),
+    },
+  },
+
+  update: {
+    body: {title: Joi.string().required(),
+      content: Joi.string().required(),
+    },
+    params: {
+{{name}}Id: Joi.string()
+        .hex()
+        .required(),
+    },
+  },
+};
