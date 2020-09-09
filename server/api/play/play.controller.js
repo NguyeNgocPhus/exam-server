@@ -27,13 +27,17 @@ async function interview(req, res) {
   const { interviewScore, comment, interviewer } = req.body;
   const play = await Play.findById(req.params.id);
   if (!play) return res.status(httpStatus.NOT_FOUND).end();
-  play.interviewScore = interviewScore;
-  play.comment = comment;
-  play.interviewer = interviewer;
-  const user = await User.findById(play.userID);
-  user.isInterviewing = false;
-  await user.save();
-  play.save().then((result) => res.status(httpStatus.OK).json(result));
+  if (play.isInterviewed === false) {
+    play.interviewScore = interviewScore;
+    play.comment = comment;
+    play.interviewer = interviewer;
+    play.isInterviewed = true;
+    const user = await User.findById(play.userID);
+    user.isInterviewing = false;
+    await user.save();
+    return play.save().then((result) => res.status(httpStatus.OK).json(result));
+  }
+  return res.status(httpStatus.FORBIDDEN).json({ message: 'Sinh viên đã được phỏng vấn' });
 }
 
 async function GetPlay(req, res) {

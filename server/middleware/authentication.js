@@ -17,10 +17,9 @@ function isAuthenticated(array) {
       const user = await User.findOne({ studentId: data.studentId }, filter);
       if (user && array.indexOf(user.role) >= 0) {
         req.auth = user;
-        next();
-      } else {
-        res.status(httpStatus.UNAUTHORIZED).end();
+        return next();
       }
+      return res.status(httpStatus.UNAUTHORIZED).end();
     });
   };
 }
