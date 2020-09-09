@@ -32,6 +32,7 @@ const playSchema = new mongoose.Schema(
     time: { type: Number, default: 60 * 60 },
     status: { type: Number, default: 0 },
     interviewScore: { type: Number, default: 0 },
+    isInterviewed: { type: Boolean, default: false },
     interviewer: { type: String },
     comment: { type: String },
     totalScore: { type: Number, default: 0 },

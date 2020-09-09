@@ -40,7 +40,6 @@ module.exports = function(socket) {
       switch (data.comand) {
         case 1000: {
           const play = data.data;
-          console.log(play);
           const result = await scoreCaculation(play);
           if (result) {
             const data = { code: 2, mesange: 'Tiếp tục', data: result };

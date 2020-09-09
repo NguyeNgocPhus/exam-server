@@ -15,13 +15,7 @@ module.exports = {
   },
   update: {
     body: {
-      phone: Joi.string().required(),
-      studentId: Joi.string().required(),
-      name: Joi.string().required(),
-      email: Joi.string().required(),
-      className: Joi.string().required(),
-      isExam: Joi.string().required(),
-      role: Joi.string().required(),
+      isExam: Joi.boolean().required(),
     },
     params: {
       checkinId: Joi.string()

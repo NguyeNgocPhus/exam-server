@@ -67,15 +67,8 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const { name, studentId, email, phone, className, isExam } = req.body;
-    const duplicate = await User.findOne({ studentId });
-    if (duplicate && duplicate.studentId !== studentId) res.status(httpStatus.CONFLICT).end();
+    const { isExam } = req.body;
     const { user } = req;
-    user.name = name;
-    user.studentId = studentId;
-    user.email = email;
-    user.phone = phone;
-    user.class = className;
     user.isExam = isExam;
     user.save();
     res.status(httpStatus.OK).json(user);

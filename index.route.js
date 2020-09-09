@@ -25,5 +25,8 @@ router.use('/questionlist', questionListRoutes);
 router.use('/checkin', checkinRoutes);
 router.use('/design', designRoutes);
 router.use('/file', fileRoutes);
-
+router.get('/noti', (req, res) => {
+  global.io.emit('FromAPI');
+  res.end();
+});
 module.exports = router;

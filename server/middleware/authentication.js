@@ -11,7 +11,6 @@ const User = require('../api/user/user.model');
 
 function isAuthenticated(array) {
   return async (req, res, next) => {
-    console.log(req.token);
     jwt.verify(req.token, config.jwtSecret, async (err, data) => {
       if (err) return next(err);
       const filter = { password: 0, createdAt: 0, updatedAt: 0, playId: 0 };
