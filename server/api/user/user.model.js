@@ -57,7 +57,13 @@ UserSchema.pre('save', function(next) {
 
 UserSchema.statics = {
   async get(id) {
-    const user = await this.findById(id);
+    const user = await this.findById(id).populate({
+      path: 'playId',
+      populate: {
+        path: 'history.questions.questionId',
+      },
+    });
+    // .populate('playId.history.questions.questionId');
     return user;
   },
 
