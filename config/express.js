@@ -1,6 +1,7 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 const express = require('express');
+const webpush = require('web-push');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -18,6 +19,9 @@ const routes = require('../index.route');
 const config = require('./config');
 const APIError = require('../server/helpers/APIError');
 
+const publicVapidKey = 'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo';
+const privateVapidKey = '3KzvKasA2SoCxsp0iIG_o9B0Ozvl1XDwI63JRKNIWBM';
+
 const app = express();
 if (config.env === 'development') {
   app.use(logger('dev'));
@@ -33,6 +37,7 @@ app.use(cors());
 app.use(express.static(`${__dirname}/public`));
 app.use(fileUpload({ createParentPath: true }));
 
+webpush.setVapidDetails('mailto:test@test.com', publicVapidKey, privateVapidKey);
 app.use('/api', routes);
 
 app.use((err, req, res, next) => {

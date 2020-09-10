@@ -28,7 +28,7 @@ const playSchema = new mongoose.Schema(
         },
       ],
     },
-    subject: { type: Boolean, default: false },
+    subject: { type: Number, default: false },
     time: { type: Number, default: 60 * 60 },
     status: { type: Number, default: 0 },
     interviewScore: { type: Number, default: 0 },
