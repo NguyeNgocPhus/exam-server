@@ -45,7 +45,7 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  const { name, studentId, email, className, phone, role } = req.body;
+  const { name, studentId, email, className, password, phone, role } = req.body;
   const user = await User.findOne({ studentId });
   if (user && user.studentId !== studentId) return res.status(httpStatus.CONFLICT).end();
   const newUser = req.user;
@@ -54,6 +54,7 @@ async function update(req, res) {
   newUser.email = email;
   newUser.phone = phone;
   newUser.role = role;
+  newUser.password = password;
   newUser.class = className;
   newUser.save();
   return res.status(httpStatus.OK).json(newUser);

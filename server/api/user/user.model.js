@@ -35,26 +35,6 @@ const UserSchema = new mongoose.Schema(
  */
 UserSchema.method({});
 
-UserSchema.pre('save', function(next) {
-  if (!this.isModified('password')) return next();
-  const rounds = 10;
-  bcrypt.hash(this.password, rounds, (err, hash) => {
-    if (err) return next(err);
-    this.password = hash;
-    next();
-  });
-});
-
-UserSchema.pre('save', function(next) {
-  const rounds = 10;
-  if (!this.isModified('password')) return next();
-  return bcrypt.hash(this.password, rounds, (err, hash) => {
-    if (err) return next(err);
-    this.password = hash;
-    return next();
-  });
-});
-
 UserSchema.statics = {
   async get(id) {
     const user = await this.findById(id).populate({
@@ -63,7 +43,6 @@ UserSchema.statics = {
         path: 'history.questions.questionId',
       },
     });
-    // .populate('playId.history.questions.questionId');
     return user;
   },
 
