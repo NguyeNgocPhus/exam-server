@@ -17,7 +17,9 @@ function errorWithMessage(socket, message) {
   socket.disconnect('unauthorized');
 }
 
-function success(socket, user) {
+function success(socket, user){
+
+console.log(user);
   if (user.role === 'user') {
     socket.broadcast.emit(CONST.NAMESPACE.AUTH, {
       command: CONST.RETURN.AUTH.USER_GO_ONLINE,
@@ -54,7 +56,9 @@ module.exports = function(socket) {
                   if (global.hshUserSocket.hasOwnProperty(user.id)) {
                     return errorWithMessage(socket, 'User already online.');
                   }
-                  success(socket, user);
+                  else{
+                    success(socket, user);
+                  }
                 }
               });
             }

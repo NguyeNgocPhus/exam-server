@@ -23,13 +23,14 @@ async function create(req, res, next) {
   try {
     const { name, questions, usingQuestion, isRandom } = req.body;
     try {
-      const questionsArray = [];
-      questions.map(async (item) => {
+      let questionsArray = [];
+      const a = questions.map(async (item) => {
         const question = await Question.findById(item);
-        questionsArray.push({ questionId: question._id, point: question.score });
+        return { questionId: question._id, point: question.score };
       });
+      questionsArray = await Promise.all(a);
       const listQ = new QuestionList({ name, usingQuestion, questions: questionsArray, isRandom });
-      listQ.save();
+      await listQ.save();
       res.status(httpStatus.OK).json(listQ);
     } catch (err) {
       next(err);
@@ -42,11 +43,12 @@ async function create(req, res, next) {
 async function update(req, res, next) {
   try {
     const { name, questions, usingQuestion, isRandom } = req.body;
-    const questionsArray = [];
-    questions.map(async (item) => {
+    let questionsArray = [];
+    const a = questions.map(async (item) => {
       const question = await Question.findById(item);
-      questionsArray.push({ questionId: question._id, point: question.score });
+      return { questionId: question._id, point: question.score };
     });
+    questionsArray = await Promise.all(a);
     const { questionList } = req;
     questionList.name = name;
     questionList.usingQuestion = usingQuestion;

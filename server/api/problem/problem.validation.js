@@ -7,8 +7,8 @@ module.exports = {
       content: Joi.string().required(),
       input: Joi.string().required(),
       output: Joi.string().required(),
-      correctScore: Joi.string().required(),
-      level: Joi.string().required(),
+      correctScore: Joi.number().required(),
+      level: Joi.number().required(),
     },
   },
   update: {

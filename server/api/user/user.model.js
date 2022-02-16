@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema(
     studentId: { type: String, unique: true },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    isLocked: { type: Boolean, default: true },
+    isLocked: { type: Boolean, default: false },
     isOnline: { type: Boolean, default: false },
     isExam: { type: Boolean, default: false },
     playId: { type: mongoose.Schema.Types.ObjectId, ref: 'Play' },
